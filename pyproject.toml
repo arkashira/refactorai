@@ -1,0 +1,10 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "refactorai"
+version = "0.1.0"
+description = "Simple AI‑powered refactoring recommendation simulator"
+requires-python = ">=3.8"
+dependencies = []
