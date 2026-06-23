@@ -1,52 +1,57 @@
 import json
 from dataclasses import dataclass
-from typing import List
+from datetime import datetime, timedelta
+from typing import List, Dict
 
 @dataclass
-class Suggestion:
-    line_number: int
-    code_snippet: str
-    apply_link: str
+class RefactoringAction:
+    organization: str
+    repository: str
+    confidence: float
+    cyclomatic_complexity: float
+    timestamp: datetime
 
 class RefactorAI:
-    def __init__(self, repository_permissions):
-        self.repository_permissions = repository_permissions
+    def __init__(self):
+        self.actions = []
+        self.api_key = None
 
-    def analyze_changed_files(self, changed_files):
-        suggestions = []
-        for file in changed_files:
-            suggestions.extend(self.analyze_file(file))
-        return suggestions
+    def add_action(self, action: RefactoringAction):
+        self.actions.append(action)
 
-    def analyze_file(self, file):
-        # Simulate analysis of a file
-        suggestions = [
-            Suggestion(1, "Code snippet 1", "https://example.com/apply/1"),
-            Suggestion(2, "Code snippet 2", "https://example.com/apply/2"),
-            Suggestion(3, "Code snippet 3", "https://example.com/apply/3"),
-        ]
-        return suggestions
+    def get_weekly_metrics(self, organization: str = None, repository: str = None, start_date: datetime = None, end_date: datetime = None) -> Dict:
+        filtered_actions = [action for action in self.actions if 
+                            (organization is None or action.organization == organization) and 
+                            (repository is None or action.repository == repository) and 
+                            (start_date is None or action.timestamp >= start_date) and 
+                            (end_date is None or action.timestamp <= end_date)]
+        weekly_metrics = {}
+        for action in filtered_actions:
+            week_start = action.timestamp - timedelta(days=action.timestamp.weekday())
+            week_key = week_start.strftime('%Y-%W')
+            if week_key not in weekly_metrics:
+                weekly_metrics[week_key] = {'total_actions': 0, 'confidence_sum': 0.0, 'cyclomatic_complexity_sum': 0.0}
+            weekly_metrics[week_key]['total_actions'] += 1
+            weekly_metrics[week_key]['confidence_sum'] += action.confidence
+            weekly_metrics[week_key]['cyclomatic_complexity_sum'] += action.cyclomatic_complexity
+        result = {}
+        for week_key, metrics in weekly_metrics.items():
+            result[week_key] = {
+                'total_accepted_actions': metrics['total_actions'],
+                'average_confidence': metrics['confidence_sum'] / metrics['total_actions'] if metrics['total_actions'] > 0 else 0.0,
+                'reduction_in_cyclomatic_complexity': metrics['cyclomatic_complexity_sum'] / metrics['total_actions'] if metrics['total_actions'] > 0 else 0.0
+            }
+        return result
 
-    def post_comment(self, suggestions, repository_owner):
-        if self.repository_permissions.get(repository_owner, False):
-            # Simulate posting a comment
-            print(f"Posting comment for {repository_owner}")
-            for suggestion in suggestions[:3]:
-                print(f"Line {suggestion.line_number}: {suggestion.code_snippet} - {suggestion.apply_link}")
-        else:
-            print(f"RefactorAI integration not enabled for {repository_owner}")
+    def export_csv(self, metrics: Dict):
+        csv_data = 'Week,Total Accepted Actions,Average Confidence,Reduction in Cyclomatic Complexity\n'
+        for week_key, metric in metrics.items():
+            csv_data += f'{week_key},{metric["total_accepted_actions"]},{metric["average_confidence"]},{metric["reduction_in_cyclomatic_complexity"]}\n'
+        return csv_data
 
-    def log_activity(self, activity):
-        # Simulate logging activity
-        print(f"Logging activity: {activity}")
+    def authenticate(self, api_key: str):
+        self.api_key = api_key
 
-def main():
-    repository_permissions = {"owner1": True, "owner2": False}
-    refactor_ai = RefactorAI(repository_permissions)
-    changed_files = ["file1.py", "file2.py"]
-    suggestions = refactor_ai.analyze_changed_files(changed_files)
-    refactor_ai.post_comment(suggestions, "owner1")
-    refactor_ai.log_activity("Comment posted")
-
-if __name__ == "__main__":
-    main()
+    def update_dashboard(self):
+        # Simulate updating the dashboard within 15 minutes
+        pass
