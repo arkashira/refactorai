@@ -1,0 +1,21 @@
+# Business Model Canvas – RefactorAI
+
+| **Section** | **Details** |
+|-------------|-------------|
+| **Value Proposition** | • **Data‑driven Refactoring Insights** – A real‑time dashboard that aggregates weekly refactoring actions and quantifies their impact on code‑quality metrics.<br>• **Actionable Metrics** – Visualize the correlation between refactoring effort (e.g., lines changed, time spent) and quality improvements (e.g., cyclomatic complexity, code churn).<br>• **Continuous Improvement Loop** – Teams can see the ROI of refactoring, prioritize future work, and justify investment in code health.<br>• **Seamless Integration** – Plug‑and‑play with existing CI/CD pipelines and version control systems via a lightweight API. |
+| **Customer Segments** | 1. **Enterprise Software Teams** – Mid‑size to large organizations that maintain large codebases and need to justify refactoring budgets.<br>2. **DevOps & QA Departments** – Teams focused on code quality, maintainability, and technical debt reduction.<br>3. **Open‑Source Projects** – Maintainers who want to track the health of their codebase over time.<br>4. **Consulting Firms** – Agile coaches and technical consultants who advise on refactoring strategies. |
+| **Channels** | • **Direct Sales & Enterprise Outreach** – Dedicated sales team targeting engineering managers and CTOs.<br>• **Marketplace Listings** – GitHub Marketplace, Azure DevOps Marketplace, and GitLab Marketplace.<br>• **Developer Evangelism** – Blog posts, webinars, conference talks, and open‑source community engagement.<br>• **Partner Integrations** – Pre‑built connectors for popular CI/CD tools (GitHub Actions, GitLab CI, Jenkins). |
+| **Revenue Streams** | 1. **Subscription Licensing** – Tiered SaaS plans (Starter, Professional, Enterprise) based on number of repositories, users, and feature set.<br>2. **Enterprise On‑Prem Deployment** – One‑time license fee + annual maintenance for self‑hosted installations.<br>3. **Professional Services** – Implementation, custom integration, and training workshops.<br>4. **Marketplace Add‑ons** – Pay‑per‑use analytics or advanced reporting modules. |
+| **Cost Structure** | • **Development & Maintenance** – Core product, API, UI, and data pipelines.<br>• **Cloud Infrastructure** – Compute, storage, and CDN for SaaS deployments.<br>• **Sales & Marketing** – Lead generation, demos, and partner programs.<br>• **Customer Success & Support** – Onboarding, documentation, and help desk.<br>• **Compliance & Security** – Audits, encryption, and data residency. |
+| **Key Resources** | • **Engineering Team** – Backend, frontend, data science, and DevOps.<br>• **Data Infrastructure** – PostgreSQL/TimescaleDB, Redis for caching, and S3 for CSV exports.<br>• **Product & Design** – UX research, product managers, and designers.<br>• **Community & Ecosystem** – GitHub repos, open‑source contributors, and partner network.<br>• **Brand & Thought Leadership** – Blog, webinars, and conference presence. |
+| **Key Activities** | • **Product Development** – Building and iterating the dashboard, API, and analytics engine.<br>• **Data Collection & Processing** – Ingesting refactoring actions from CI pipelines and computing metrics.<br>• **Customer Enablement** – Documentation, tutorials, and support.<br>• **Sales & Partnerships** – Building channel relationships and closing deals.<br>• **Continuous Improvement** – Monitoring usage, gathering feedback, and releasing new features. |
+| **Key Partners** | • **CI/CD Platforms** – GitHub, GitLab, Bitbucket, Jenkins for data ingestion.<br>• **Code Quality Tools** – SonarQube, CodeClimate, ESLint for metric enrichment.<br>• **Cloud Providers** – AWS, GCP, Azure for hosting and scaling.<br>• **Developer Communities** – Open‑source forums, Slack/Discord channels for evangelism.<br>• **Consulting Partners** – Agile coaches and technical debt specialists who can recommend RefactorAI to clients. |
+
+---
+
+**Next Steps**
+
+1. **Validate** the pricing model with a small group of beta customers.  
+2. **Build** a minimal viable integration with GitHub Actions to auto‑push refactoring actions.  
+3. **Launch** a marketing campaign targeting engineering managers in mid‑size SaaS companies.  
+4. **Iterate** on the dashboard UX based on early user feedback and usage analytics.
