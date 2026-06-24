@@ -1,9 +1,16 @@
 # RefactorAI
-RefactorAI is a dashboard that shows weekly accepted refactoring actions and their effect on code-quality metrics.
-
+RefactorAI is a VS Code extension that provides suggestions for improving your code.
+## Features
+* Scan your workspace for suggestions
+* View suggestions inline
+* Apply or dismiss suggestions
+* Respects user's proxy and auth settings
+## Installation
+1. Clone the repository
+2. Run `poetry install`
+3. Open the extension in VS Code
 ## Usage
-1. Create a RefactorAI instance: `refactor_ai = RefactorAI()`
-2. Add refactoring actions: `refactor_ai.add_action(RefactoringAction('org1', 'repo1', 0.8, 10.0, datetime(2022, 1, 3)))`
-3. Get weekly metrics: `metrics = refactor_ai.get_weekly_metrics()`
-4. Export CSV: `csv_data = refactor_ai.export_csv(metrics)`
-5. Authenticate: `refactor_ai.authenticate('api_key')`
+1. Open the command palette and select "RefactorAI: Scan Workspace"
+2. View suggestions in the side panel
+3. Click "Apply" to apply a suggestion
+4. Click "Dismiss" to dismiss a suggestion
