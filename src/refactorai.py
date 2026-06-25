@@ -4,41 +4,67 @@ from typing import List
 
 @dataclass
 class Suggestion:
-    file: str
-    line: int
-    description: str
-    code_change: str
+    line_number: int
+    code_snippet: str
+    apply_link: str
+
+@dataclass
+class FileAnalysis:
+    file_name: str
+    suggestions: List[Suggestion]
 
 class RefactorAI:
-    def __init__(self):
-        self.suggestions = []
-        self.dismissed_suggestions = set()
+    def __init__(self, repository_permissions):
+        self.repository_permissions = repository_permissions
 
-    def scan_workspace(self):
-        # Simulate scanning the workspace and generating suggestions
-        self.suggestions = [
-            Suggestion("file1.py", 10, "Suggestion 1", "print('Hello World')"),
-            Suggestion("file2.py", 20, "Suggestion 2", "print('Hello Universe')"),
+    def analyze_pull_request(self, pull_request):
+        if not self.repository_permissions.get(pull_request['repository'], False):
+            return []
+
+        changed_files = pull_request.get('changed_files', [])
+        analyses = []
+
+        for file in changed_files:
+            suggestions = self.analyze_file(file)
+            analyses.append(FileAnalysis(file, suggestions))
+
+        return analyses
+
+    def analyze_file(self, file_name):
+        # Simulate file analysis
+        suggestions = [
+            Suggestion(1, 'code snippet 1', 'apply link 1'),
+            Suggestion(2, 'code snippet 2', 'apply link 2'),
+            Suggestion(3, 'code snippet 3', 'apply link 3'),
         ]
+        return suggestions[:3]  # Return top 3 suggestions
 
-    def get_suggestions(self):
-        return [s for s in self.suggestions if (s.file, s.line) not in self.dismissed_suggestions]
+    def post_comment(self, file_analysis):
+        comment = f'File: {file_analysis.file_name}\n'
+        for suggestion in file_analysis.suggestions:
+            comment += f'Line {suggestion.line_number}: {suggestion.code_snippet} ({suggestion.apply_link})\n'
+        return comment
 
-    def apply_suggestion(self, suggestion):
-        # Simulate applying the suggestion and staging the file in Git
-        print(f"Applying suggestion: {suggestion.description}")
-        print(f"Staging file: {suggestion.file}")
+    def log_activity(self, activity):
+        print(f'Logging activity: {activity}')
 
-    def dismiss_suggestion(self, suggestion):
-        self.dismissed_suggestions.add((suggestion.file, suggestion.line))
+def main():
+    repository_permissions = {
+        'repo1': True,
+        'repo2': False,
+    }
+    refactor_ai = RefactorAI(repository_permissions)
 
-    def save_dismissed_suggestions(self):
-        with open("dismissed_suggestions.json", "w") as f:
-            json.dump([list(s) for s in self.dismissed_suggestions], f)
+    pull_request = {
+        'repository': 'repo1',
+        'changed_files': ['file1.py', 'file2.py'],
+    }
 
-    def load_dismissed_suggestions(self):
-        try:
-            with open("dismissed_suggestions.json", "r") as f:
-                self.dismissed_suggestions = set(tuple(s) for s in json.load(f))
-        except FileNotFoundError:
-            pass
+    analyses = refactor_ai.analyze_pull_request(pull_request)
+    for analysis in analyses:
+        comment = refactor_ai.post_comment(analysis)
+        print(comment)
+        refactor_ai.log_activity(f'Comment posted on {analysis.file_name}')
+
+if __name__ == '__main__':
+    main()

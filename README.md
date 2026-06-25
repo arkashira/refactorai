@@ -1,16 +1,10 @@
 # RefactorAI
-RefactorAI is a VS Code extension that provides suggestions for improving your code.
-## Features
-* Scan your workspace for suggestions
-* View suggestions inline
-* Apply or dismiss suggestions
-* Respects user's proxy and auth settings
-## Installation
-1. Clone the repository
-2. Run `poetry install`
-3. Open the extension in VS Code
+
+RefactorAI is a tool that analyzes pull requests and comments on files with actionable suggestions.
+
 ## Usage
-1. Open the command palette and select "RefactorAI: Scan Workspace"
-2. View suggestions in the side panel
-3. Click "Apply" to apply a suggestion
-4. Click "Dismiss" to dismiss a suggestion
+
+1. Create a `RefactorAI` instance with repository permissions.
+2. Call `analyze_pull_request` with a pull request object.
+3. Post comments on files using `post_comment`.
+4. Log activity using `log_activity`.
